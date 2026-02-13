@@ -1,12 +1,162 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valentine's Page</title>
+<title>For Nandita ❤️</title>
+
+<style>
+body{
+    margin:0;
+    padding:0;
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg,#ff758c,#ff7eb3);
+    color:white;
+}
+
+/* Floating hearts */
+.heart{
+    position:absolute;
+    color:#fff;
+    font-size:20px;
+    animation: float 6s linear infinite;
+}
+
+@keyframes float{
+    0%{transform: translateY(100vh) scale(0);}
+    100%{transform: translateY(-10vh) scale(1);}
+}
+
+h1{
+    font-size:38px;
+    text-align:center;
+}
+
+button{
+    padding:12px 25px;
+    font-size:18px;
+    border:none;
+    border-radius:30px;
+    cursor:pointer;
+    margin:10px;
+    transition:0.3s;
+}
+
+#yesBtn{
+    background:#ff2e63;
+    color:white;
+}
+
+#noBtn{
+    background:white;
+    color:#ff2e63;
+    position:absolute;
+}
+
+#result{
+    display:none;
+    text-align:center;
+}
+
+#result img{
+    width:280px;
+    border-radius:20px;
+    margin-top:20px;
+    box-shadow:0px 10px 30px rgba(0,0,0,0.4);
+    animation: zoomIn 2s ease;
+}
+
+@keyframes zoomIn{
+    from{transform:scale(0.5);opacity:0;}
+    to{transform:scale(1);opacity:1;}
+}
+</style>
 </head>
+
 <body>
-    <h1>Happy Valentine's Day!</h1>
-    <p>Welcome to my Valentine's Day page.</p>
+
+<h1 id="question">Will you be my Valentine Nandita? 💖</h1>
+
+<div>
+<button id="yesBtn">Yes 💘</button>
+<button id="noBtn">No 😜</button>
+</div>
+
+<div id="result">
+    <h2 id="typedText"></h2>
+    <img src="us.jpg" alt="Our Photo">
+</div>
+
+<audio autoplay loop>
+    <source src="taylorswift.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const result = document.getElementById("result");
+const question = document.getElementById("question");
+const typedText = document.getElementById("typedText");
+
+/* NO button runs */
+noBtn.addEventListener("mouseover",function(){
+    const x=Math.random()*(window.innerWidth-100);
+    const y=Math.random()*(window.innerHeight-50);
+    noBtn.style.left=x+"px";
+    noBtn.style.top=y+"px";
+});
+
+/* Floating hearts generator */
+function createHeart(){
+    const heart=document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML="❤️";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.fontSize=Math.random()*20+15+"px";
+    document.body.appendChild(heart);
+    setTimeout(()=>{heart.remove();},6000);
+}
+setInterval(createHeart,400);
+
+/* Confetti */
+function confetti(){
+    for(let i=0;i<100;i++){
+        const conf=document.createElement("div");
+        conf.style.position="absolute";
+        conf.style.width="8px";
+        conf.style.height="8px";
+        conf.style.background="white";
+        conf.style.left=Math.random()*100+"vw";
+        conf.style.top=Math.random()*100+"vh";
+        conf.style.opacity=Math.random();
+        conf.style.transform="rotate("+Math.random()*360+"deg)";
+        document.body.appendChild(conf);
+        setTimeout(()=>{conf.remove();},2000);
+    }
+}
+
+/* Typewriter effect */
+function typeWriter(text,i=0){
+    if(i<text.length){
+        typedText.innerHTML+=text.charAt(i);
+        setTimeout(()=>typeWriter(text,i+1),50);
+    }
+}
+
+/* YES button */
+yesBtn.addEventListener("click",function(){
+    question.style.display="none";
+    yesBtn.style.display="none";
+    noBtn.style.display="none";
+    result.style.display="block";
+    confetti();
+    typeWriter("Thanks for choosing me ❤️ Because I found you very pretty 😍");
+});
+</script>
+
 </body>
 </html>
